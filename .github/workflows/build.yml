@@ -3,9 +3,7 @@ name: Build Fabric Mod
 
 on:
   push:
-    branches: [ "main", "master" ]
-  pull_request:
-    branches: [ "main", "master" ]
+    branches: [main, master]
   workflow_dispatch:
 
 permissions:
@@ -24,20 +22,16 @@ jobs:
         with:
           distribution: temurin
           java-version: '21'
-          cache: gradle
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      - name: Grant execute permission
-        run: chmod +x gradlew
+      - name: Build mod
+        run: gradle build --no-daemon
 
-      - name: Build Fabric mod
-        run: ./gradlew build --no-daemon
-
-      - name: Upload mod JAR
+      - name: Upload JAR
         uses: actions/upload-artifact@v4
         with:
-          name: Fabric-Mod-1.21.11
+          name: PENIKqhitcounter-1.21.11
           path: build/libs/*.jar
           if-no-files-found: error
